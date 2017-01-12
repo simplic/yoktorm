@@ -11,4 +11,4 @@ To contribute to the project, you either needs to file an issue and create an [h
 
 # About the contributor and creator
 
-The project is initialy created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
+The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
