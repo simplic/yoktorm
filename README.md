@@ -1,5 +1,6 @@
-# Yoktorm
-Compiler as a service supported .net orm, which aim is to be lightweight, dynamic and fast. The name is a combination of [yokto](https://en.wikipedia.org/wiki/Yocto-) and [orm](https://en.wikipedia.org/wiki/Object-relational_mapping).
+# About yoktorm
+
+Yoktorm is a compiler as a service supported .net orm, which aim is to be lightweight, dynamic and fast. The name is a combination of [yokto](https://en.wikipedia.org/wiki/Yocto-) and [orm](https://en.wikipedia.org/wiki/Object-relational_mapping).
 
 # Setup development environment
 
