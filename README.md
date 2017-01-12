@@ -10,6 +10,8 @@ You just need to clone the project and open the `Yorktorm.sln` solution file in 
 
 To contribute to the project, you either needs to file an issue and create an [https://github.com/simplic-systems/yoktorm/wiki](YPF) or for smaller contributions just create a pull request!
 
+All pull request must be done to `dev`, because the `dev` branch always contains the current *stable* development version. The `master` branch contains the last realsed version. 
+
 # About the contributor and creator
 
 The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
