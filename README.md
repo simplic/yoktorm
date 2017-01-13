@@ -1,14 +1,16 @@
 # About yoktorm
 
-Yoktorm is a compiler as a service supported .net orm, which aim is to be lightweight, dynamic and fast. The name is a combination of [yocto](https://en.wikipedia.org/wiki/Yocto-) and [orm](https://en.wikipedia.org/wiki/Object-relational_mapping).
+Yoktorm is a compiler-as-a-service supported .net ORM, which aim is to be lightweight, dynamic and fast. The name is a combination of [yocto](https://en.wikipedia.org/wiki/Yocto-) and [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping).
 
 # Setup development environment
 
-You just need to clone the project and open the `Yorktorm.sln` solution file in the `/src/` directory. Compile and you are ready.
+ 1. Clone the project.
+ 2. Open the `Yorktorm.sln` solution file in the `/src/` directory.
+ 3. Compile.
 
 # Contribute to the project
 
-To contribute to the project, you either needs to file an issue and create an [https://github.com/simplic-systems/yoktorm/wiki](YPF) or for smaller contributions just create a pull request!
+Larger contributions need an issue and an [https://github.com/simplic-systems/yoktorm/wiki](YPF). Smaller contributions can be done via pull request.
 
 All pull request must be done to `dev`, because the `dev` branch always contains the current *stable* development version. The `master` branch contains the last realsed version. 
 
