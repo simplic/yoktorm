@@ -10,7 +10,7 @@ Yoktorm is a compiler-as-a-service supported .net ORM, which aim is to be lightw
 
 # Contribute to the project
 
-Larger contributions need an issue and an [https://github.com/simplic-systems/yoktorm/wiki](YPF). Smaller contributions can be done via pull request.
+Larger contributions need an issue and an [YPF](https://github.com/simplic-systems/yoktorm/wiki). Smaller contributions can be done via pull request.
 
 All pull request must be done to `dev`, because the `dev` branch always contains the current *stable* development version. The `master` branch contains the last realsed version. 
 
