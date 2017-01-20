@@ -21,4 +21,7 @@ All pull request must be done to `dev`, because the `dev` branch always contains
 # About the contributor and creator
 
 The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
-()
+
+| Type | Name | Projects |
+| --- | --- | --- |
+| Creator | [SIMPLIC GmbH](https://simplic.biz) | The complete SIMPLIC product family |
