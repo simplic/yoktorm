@@ -2,7 +2,7 @@
 
 Yoktorm is a compiler-as-a-service supported .net ORM, which aim is to be lightweight, dynamic and fast. The name is a combination of [yocto](https://en.wikipedia.org/wiki/Yocto-) and [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping).
 
-## Wolo / Information
+## Wiki / Information
 
 Detailed information about yoktorm are available in the [wiki](https://github.com/simplic-systems/yoktorm/wiki).
 
