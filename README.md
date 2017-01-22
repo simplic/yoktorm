@@ -18,6 +18,8 @@ Larger contributions need an issue and an [YPF](https://github.com/simplic-syste
 
 All pull request must be done to `dev`, because the `dev` branch always contains the current *stable* development version. The `master` branch contains the last realsed version. 
 
+![Branching-Image](img/branching.png)
+
 # About the contributor and creator
 
 The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
