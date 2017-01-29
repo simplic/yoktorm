@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoktorm.CoreXUnit", "Testin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{4D8BBC97-25D9-4756-901B-6AC9F9265515}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yoktorm.SQLite", "Yoktorm.SQLite\Yoktorm.SQLite.csproj", "{9AEB3D6F-1405-4D0C-83AD-2EA95676BB71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{650B64BD-72C3-4E90-AD2E-E3E36EC590C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{650B64BD-72C3-4E90-AD2E-E3E36EC590C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{650B64BD-72C3-4E90-AD2E-E3E36EC590C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AEB3D6F-1405-4D0C-83AD-2EA95676BB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEB3D6F-1405-4D0C-83AD-2EA95676BB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AEB3D6F-1405-4D0C-83AD-2EA95676BB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEB3D6F-1405-4D0C-83AD-2EA95676BB71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

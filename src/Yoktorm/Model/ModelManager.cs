@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoktorm.Model
 {
-    class ModelManager
+    internal class ModelManager : IModelManager
     {
     }
 }

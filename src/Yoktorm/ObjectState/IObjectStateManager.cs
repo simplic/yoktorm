@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoktorm.ObjectState
 {
-    internal class ObjectStateManager : IObjectStateManager
+    public interface IObjectStateManager
     {
-
     }
 }

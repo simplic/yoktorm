@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yoktorm.ObjectState
+namespace Yoktorm.SQLite
 {
-    internal class ObjectStateManager : IObjectStateManager
+    internal class SQLiteProvider : IProvider
     {
 
     }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yoktorm.ObjectState
+namespace Yoktorm.Compilter
 {
-    internal class ObjectStateManager : IObjectStateManager
+    public interface IModelCompiler
     {
-
     }
 }

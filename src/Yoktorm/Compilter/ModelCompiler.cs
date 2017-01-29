@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoktorm.Compilter
 {
-    class ModelCompiler
+    internal class ModelCompiler : IModelCompiler
     {
     }
 }
