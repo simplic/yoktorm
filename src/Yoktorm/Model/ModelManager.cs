@@ -8,5 +8,6 @@ namespace Yoktorm.Model
 {
     internal class ModelManager : IModelManager
     {
+
     }
 }

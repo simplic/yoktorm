@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yoktorm.Model
+namespace Yoktorm
 {
-    public interface IModelManager
+    public interface IDbContext
     {
 
     }

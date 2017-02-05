@@ -12,7 +12,7 @@ namespace Yoktorm
     /// Yoktorm database context. This context manage all statement executions, connections, model states and is the public interface of the orm
     /// </summary>
     /// <typeparam name="TConnection">ADO.Net Connection class of the ado.net provider that should be used</typeparam>
-    public abstract class DbContext<TConnection> where TConnection : IDbConnection, IDisposable
+    public abstract class DbContext<TConnection> : IDbContext where TConnection : IDbConnection, IDisposable
     {
         #region Fields
         private IConnectionHandler<TConnection> connectionHandler;
@@ -33,7 +33,7 @@ namespace Yoktorm
         /// <param name="connectionHandler">Connection handler</param>
         /// <param name="connectionString">Connection string</param>
         /// <param name="useObjectStateManager">Defines whether to use the object state manager or not</param>
-        public DbContext(IProvider provider, IConnectionHandler<TConnection> connectionHandler, string connectionString, bool useObjectStateManager)
+        internal DbContext(IProvider provider, IConnectionHandler<TConnection> connectionHandler, string connectionString, bool useObjectStateManager)
         {
             this.provider = provider;
             this.connectionHandler = connectionHandler;

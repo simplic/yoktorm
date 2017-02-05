@@ -8,5 +8,6 @@ namespace Yoktorm.Compilter
 {
     public interface IModelCompiler
     {
+
     }
 }

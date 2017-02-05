@@ -8,5 +8,6 @@ namespace Yoktorm.ObjectState
 {
     public interface IObjectStateManager
     {
+
     }
 }

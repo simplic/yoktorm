@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace Yoktorm.SQLite
 {
-    public class SQLiteDbContext : DbContext<SQLiteConnection>
+    public class SQLiteDbContext
     {
-        public SQLiteDbContext(string connectionString, bool useObjectStateManager) 
-            : base(new SQLiteProvider(), new SQLiteConnectionHandler(), connectionString, useObjectStateManager)
-        {
-
-        }
+        
     }
 }
