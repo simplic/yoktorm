@@ -20,6 +20,13 @@ All pull request must be done to `dev`, because the `dev` branch always contains
 
 ![Branching.png](Branching.png)
 
+# Architecture
+
+The yoktorm core is implemented in a single assembly. For database needs its own yoktorm-provider. This provider delivers
+information about the database and its technical structure. E.g. for querying the table structure.
+
+
+
 # About the contributor and creator
 
 The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
