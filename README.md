@@ -25,7 +25,7 @@ All pull request must be done to `dev`, because the `dev` branch always contains
 The yoktorm core is implemented in a single assembly. For database needs its own yoktorm-provider. This provider delivers
 information about the database and its technical structure. E.g. for querying the table structure.
 
-![Yoktorm-Architecture](Yoktorm-Architecture)
+![Yoktorm-Architecture.png](Yoktorm-Architecture.png)
 
 # About the contributor and creator
 
