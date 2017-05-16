@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoktorm
 {
-    public interface IDbContext
+    public interface IDbContext : IDisposable
     {
 
     }
