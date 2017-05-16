@@ -29,6 +29,6 @@ namespace Yoktorm.Db
         /// <summary>
         /// Gets or sets the columns in the table
         /// </summary>
-        private IList<ColumnStructure> Columns { get; set; } = new List<ColumnStructure>();
+        public IList<ColumnStructure> Columns { get; set; } = new List<ColumnStructure>();
     }
 }

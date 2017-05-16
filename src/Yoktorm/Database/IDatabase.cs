@@ -14,5 +14,7 @@ namespace Yoktorm
         {
             get;
         }
+
+        void Initialize(IDynamicDbContext context, bool force = false);
     }
 }

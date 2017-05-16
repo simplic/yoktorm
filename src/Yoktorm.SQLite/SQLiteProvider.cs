@@ -20,27 +20,69 @@ namespace Yoktorm.SQLite
 
         public Type GetClrType(int dbType)
         {
-            throw new NotImplementedException();
+            return GetClrType((DbType)dbType);
         }
 
         public Type GetClrType(DbType dbType)
         {
-            throw new NotImplementedException();
+            switch (dbType)
+            {
+                case DbType.String:
+                    return typeof(string);
+                default:
+                    return null;
+            }
         }
 
-        public Type GetClrType(string typeName)
+        public Type GetClrTypeByName(string typeName)
         {
-            throw new NotImplementedException();
+            if (typeName.ToLower().StartsWith("varchar"))
+                return typeof(string);
+
+            return null;
         }
 
         public DbType GetDbType(Type clrType)
         {
-            throw new NotImplementedException();
+            if (clrType == typeof(string))
+                return DbType.String;
+
+            return DbType.AnsiString;
         }
 
-        public DatabaseStructure GetStructure(IDbConnection dbConnection)
+        public DatabaseStructure GetStructure(IDynamicDbContext context)
         {
-            throw new NotImplementedException();
+            var structure = new DatabaseStructure();
+
+            var tables = context.Query("SELECT * FROM sqlite_master where type = 'table'");
+
+            foreach (var table in tables)
+            {
+                var _table = new TableStructure()
+                {
+                    Name = table.name
+                };
+
+                // cid, name, type, notnull, dflt_value, pk
+                var columns = context.Query($"PRAGMA table_info({table.name})");
+                foreach (var column in columns)
+                {
+                    var _column = new ColumnStructure()
+                    {
+                        Name = column.name,
+                        DefaultValue = column.dflt_value,
+                        IsPrimaryKey = Convert.ToBoolean(column.pk),
+                        NotNull = Convert.ToBoolean(column.notnull),
+                        ColumnType = GetClrTypeByName(column.type)
+                    };
+
+                    _table.Columns.Add(_column);
+                }
+
+                structure.Tables.Add(_table);
+            }
+
+            return structure;
         }
     }
 }

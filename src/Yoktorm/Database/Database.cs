@@ -25,6 +25,8 @@ namespace Yoktorm
         private Statement.StatementCache statementCache;
         private Db.DatabaseStructure structure;
         private TProvider provider;
+        private volatile bool isInitialized;
+        private object _lock = new object();
         #endregion
 
         #region Constructor
@@ -57,6 +59,18 @@ namespace Yoktorm
         }
         #endregion
 
+        public void Initialize(IDynamicDbContext context, bool force = false)
+        {
+            lock (_lock)
+            {
+                if (!isInitialized || force)
+                {
+                    isInitialized = true;
+                    structure = provider.GetStructure(context);
+                }
+            }
+        }
+
         /// <summary>
         /// Initialize the caching system
         /// </summary>
@@ -64,7 +78,7 @@ namespace Yoktorm
         {
             statementCache = new Statement.StatementCache();
         }
-
+        
         /// <summary>
         /// Preregistere an interface
         /// </summary>

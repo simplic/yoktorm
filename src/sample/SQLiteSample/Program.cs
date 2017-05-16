@@ -19,7 +19,7 @@ namespace SQLiteSample
                 context.Execute("CREATE TABLE IF NOT EXISTS Sample (SampleText VARCHAR(100) NOT NULL PRIMARY KEY)");
 
                 var random = new Random(DateTime.Now.Millisecond);
-                var value = new { val = $"sample-value {random.Next()}"};
+                var value = new { val = $"sample-value {random.Next()}" };
 
                 var addResult = context.Execute("INSERT OR REPLACE INTO Sample(SampleText) VALUES (@val)", value);
                 Console.WriteLine($"Insert result: {addResult}");
@@ -27,6 +27,9 @@ namespace SQLiteSample
                 foreach (dynamic dyn in context.Query("SELECT * FROM Sample"))
                     Console.WriteLine($" SampleText: {dyn.SampleText}");
             }
+
+            // Check initialized is just called once
+            using (var context = database.Create()) ;
 
             Console.ReadLine();
         }

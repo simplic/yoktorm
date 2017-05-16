@@ -70,6 +70,7 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Database\IDatabase.cs" />
     <Compile Include="IDbContext.cs" />
+    <Compile Include="IDynamicDbContext.cs" />
     <Compile Include="Model\IModelManager.cs" />
     <Compile Include="Model\ModelManager.cs" />
     <Compile Include="ObjectState\IObjectStateManager.cs" />
