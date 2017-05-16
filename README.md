@@ -28,7 +28,7 @@ The yoktorm core is implemented in a single assembly. Any database managementsys
 
 ## Detailed structure
 
-![Yoktorm-Architecture.png](Yoktorm-Architecture.png)
+![YoktormStructure.png](YoktormStructure.png)
 
 * Application: Application that uses yoktorm
 * DataContext: Executes database operations and holds a database connection
