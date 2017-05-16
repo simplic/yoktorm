@@ -33,7 +33,7 @@ namespace Yoktorm
         /// <param name="connectionHandler">Connection handler</param>
         /// <param name="connectionString">Connection string</param>
         /// <param name="useObjectStateManager">Defines whether to use the object state manager or not</param>
-        internal DbContext(IProvider provider, IConnectionHandler<TConnection> connectionHandler, string connectionString, bool useObjectStateManager)
+        internal DbContext(IDatabase database, IProvider provider, IConnectionHandler<TConnection> connectionHandler, string connectionString, bool useObjectStateManager)
         {
             this.provider = provider;
             this.connectionHandler = connectionHandler;

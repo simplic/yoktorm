@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yoktorm.Compilter
+namespace Yoktorm.Compiler
 {
     internal class ModelCompiler : IModelCompiler
     {

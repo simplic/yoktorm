@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Yoktorm.Compilter;
+using Yoktorm.Compiler;
 using Yoktorm.Model;
 
 namespace Yoktorm
@@ -12,10 +12,10 @@ namespace Yoktorm
     /// Datbase handler
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
-    public abstract class Database<TContext> : IDbContext
+    public abstract class Database<TContext> : IDbContext, IDatabase
     {
         private Model.IModelManager modelManager;
-        private Compilter.IModelCompiler modelCompiler;
+        private Compiler.IModelCompiler modelCompiler;
         private Statement.StatementCache statementCache;
 
         /// <summary>
@@ -24,8 +24,9 @@ namespace Yoktorm
         public Database()
         {
             modelManager = new Model.ModelManager();
-            modelCompiler = new Compilter.ModelCompiler();
-            statementCache = new Statement.StatementCache();
+            modelCompiler = new Compiler.ModelCompiler();
+
+            SetupCache();
         }
 
         /// <summary>
@@ -33,19 +34,29 @@ namespace Yoktorm
         /// </summary>
         /// <param name="modelManager">Model manager</param>
         /// <param name="modelCompiler">Model compiler</param>
-        public Database(Model.IModelManager modelManager, Compilter.IModelCompiler modelCompiler)
+        public Database(Model.IModelManager modelManager, Compiler.IModelCompiler modelCompiler)
         {
             this.modelManager = modelManager;
             this.modelCompiler = modelCompiler;
+
+            SetupCache();
+        }
+
+        /// <summary>
+        /// Initialize the caching system
+        /// </summary>
+        private void SetupCache()
+        {
             statementCache = new Statement.StatementCache();
         }
 
         /// <summary>
-        /// Initialize the current database
+        /// Preregistere an interface
         /// </summary>
-        public void Initialize()
+        /// <typeparam name="T">Interface to register</typeparam>
+        public void Registet<T>()
         {
-
+            // Precompile models
         }
 
         /// <summary>

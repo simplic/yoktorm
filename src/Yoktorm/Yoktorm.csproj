@@ -56,10 +56,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compilter\IModelCompiler.cs" />
-    <Compile Include="Compilter\ModelCompiler.cs" />
+    <Compile Include="Compiler\IModelCompiler.cs" />
+    <Compile Include="Compiler\ModelCompiler.cs" />
     <Compile Include="Connection\IConnectionHandler.cs" />
     <Compile Include="DbContext.cs" />
+    <Compile Include="IDatabase.cs" />
     <Compile Include="IDbContext.cs" />
     <Compile Include="IProvider.cs" />
     <Compile Include="Model\IModelManager.cs" />
