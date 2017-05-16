@@ -26,6 +26,14 @@ The yoktorm core is implemented in a single assembly. Any database managementsys
 
 ![Yoktorm-Architecture.png](Yoktorm-Architecture.png)
 
+## Detailed structure
+
+![Yoktorm-Architecture.png](Yoktorm-Architecture.png)
+
+* Application: Application that uses yoktorm
+* DataContext: Executes database operations and holds a database connection
+* ObjectStateManager: Holds the state of an object loaded ord created using the datacontext
+
 # About the contributor and creator
 
 The project is initially created by [SIMPLIC GmbH](https://simplic.biz) and is heavily used in all SIMPLIC products.
