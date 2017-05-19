@@ -11,7 +11,7 @@ namespace Yoktorm.SQLite
 {
     public class SQLiteProvider : IDatabaseProvider
     {
-        public IDbConnection Get(string connectionString)
+        public IDbConnection GetConnection(string connectionString)
         {
             var connection = new SQLiteConnection(connectionString);
             connection.Open();
@@ -50,11 +50,11 @@ namespace Yoktorm.SQLite
             return DbType.AnsiString;
         }
 
-        public DatabaseStructure GetStructure(IDynamicDbContext context)
+        public DatabaseStructure GetStructure(IDbConnection connection)
         {
             var structure = new DatabaseStructure();
 
-            var tables = context.Query("SELECT * FROM sqlite_master where type = 'table'");
+            var tables = QueryHelper.Query(connection, "SELECT * FROM sqlite_master where type = 'table'");
 
             foreach (var table in tables)
             {
@@ -64,7 +64,7 @@ namespace Yoktorm.SQLite
                 };
 
                 // cid, name, type, notnull, dflt_value, pk
-                var columns = context.Query($"PRAGMA table_info({table.name})");
+                var columns = QueryHelper.Query(connection, $"PRAGMA table_info({table.name})");
                 foreach (var column in columns)
                 {
                     var _column = new ColumnStructure()

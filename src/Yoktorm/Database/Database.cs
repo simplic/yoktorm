@@ -26,6 +26,7 @@ namespace Yoktorm
         private Db.DatabaseStructure structure;
         private TProvider provider;
         private volatile bool isInitialized;
+        private string connectionString;
         private object _lock = new object();
         #endregion
 
@@ -34,12 +35,13 @@ namespace Yoktorm
         /// Initialize new database
         /// </summary>
         /// <param name="provider">Provider instance</param>
-        public Database(TProvider provider)
+        /// <param name="connectionString">Connection string</param>
+        public Database(string connectionString, TProvider provider)
         {
             modelManager = new Model.ModelManager();
             modelCompiler = new Compiler.ModelCompiler();
             this.provider = provider;
-
+            this.connectionString = connectionString;
             SetupCache();
         }
 
@@ -49,24 +51,26 @@ namespace Yoktorm
         /// <param name="provider">Provider instance</param>
         /// <param name="modelManager">Model manager</param>
         /// <param name="modelCompiler">Model compiler</param>
-        public Database(TProvider provider, Model.IModelManager modelManager, Compiler.IModelCompiler modelCompiler)
+        /// <param name="connectionString">Connection string</param>
+        public Database(string connectionString, TProvider provider, Model.IModelManager modelManager, Compiler.IModelCompiler modelCompiler)
         {
             this.modelManager = modelManager;
             this.modelCompiler = modelCompiler;
             this.provider = provider;
+            this.connectionString = connectionString;
 
             SetupCache();
         }
         #endregion
 
-        public void Initialize(IDynamicDbContext context, bool force = false)
+        public void Initialize(bool force = false)
         {
             lock (_lock)
             {
                 if (!isInitialized || force)
                 {
                     isInitialized = true;
-                    structure = provider.GetStructure(context);
+                    structure = provider.GetStructure(GetConnection(true));
                 }
             }
         }
@@ -78,14 +82,61 @@ namespace Yoktorm
         {
             statementCache = new Statement.StatementCache();
         }
-        
+
+        /// <summary>
+        /// Register a data table interface
+        /// </summary>
+        /// <param name="_interface">Type of interface</param>
+        public void RegisterTable(Type _interface)
+        {
+            if (_interface == null) throw new ArgumentNullException(nameof(_interface));
+            if (!_interface.IsInterface) throw new ArgumentOutOfRangeException("T");
+
+            var tableName = GetTableName(_interface);
+        }
+
         /// <summary>
         /// Preregistere an interface
         /// </summary>
         /// <typeparam name="T">Interface to register</typeparam>
-        public void Registet<T>()
+        public void RegisterTable<T>()
         {
-            // Precompile models
+            RegisterTable(typeof(T));
+        }
+
+        /// <summary>
+        /// Get a new connection instance of the specific provider
+        /// </summary>
+        /// <param name="ensureIsOpen">If set to true, the connection will be opened</param>
+        /// <returns>Instance of a connection</returns>
+        public IDbConnection GetConnection(bool ensureIsOpen = false)
+        {
+            var connection = provider.GetConnection(connectionString);
+            if (ensureIsOpen && connection.State != ConnectionState.Open)
+                connection.Open();
+
+            return connection;
+        }
+
+        /// <summary>
+        /// Gets the table name by the type-name
+        /// </summary>
+        /// <param name="type">Type to get the table-name from. If the type ha an TableAttribute, use it</param>
+        /// <returns></returns>
+        private string GetTableName(Type type)
+        {
+            // If the type has a TableAttribute, use it
+            var tableAttribute = type.GetCustomAttributes(typeof(TableAttribute), true).FirstOrDefault() as TableAttribute;
+
+            if (tableAttribute != null && !string.IsNullOrWhiteSpace(tableAttribute.Name))
+                return tableAttribute.Name.Trim();
+
+            // Interfaces often starts with I (e.g. IUser), so lets remove it
+            if (type.Name.StartsWith("I"))
+                return type.Name.Remove(0, 1);
+
+            // Simply return the type name
+            return type.Name;
         }
 
         /// <summary>

@@ -10,16 +10,14 @@ namespace SQLiteSample
 {
     public class SampleDatabase : Database<SampleDbContext, SQLiteProvider>
     {
-        private string connectionString;
-
-        public SampleDatabase(string connectionString) : base(new SQLiteProvider())
+        public SampleDatabase(string connectionString) : base(connectionString, new SQLiteProvider())
         {
-            this.connectionString = connectionString;
+            
         }
 
         public override SampleDbContext Create()
         {
-            return new SampleDbContext(this, connectionString, true);
+            return new SampleDbContext(this, true);
         }
     }
 }

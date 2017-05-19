@@ -12,7 +12,8 @@ namespace SQLiteSample
         {
             // Setup yoktorm
             var database = new SampleDatabase("Data Source=Sample.db;Version=3;New=True;");
-
+            database.RegisterTable<ISample>();
+            
             // Setup a context
             using (var context = database.Create())
             {

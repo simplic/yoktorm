@@ -8,10 +8,10 @@ using Yoktorm;
 
 namespace SQLiteSample
 {
-    public class SampleDbContext : DbContext<SQLiteConnection>
+    public class SampleDbContext : DbContext
     {
-        internal SampleDbContext(IDatabase database, string connectionString, bool useObjectStateManager) 
-            : base(database, connectionString, useObjectStateManager)
+        internal SampleDbContext(IDatabase database, bool useObjectStateManager) 
+            : base(database, useObjectStateManager)
         {
 
         }

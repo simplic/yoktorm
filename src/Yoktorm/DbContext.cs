@@ -13,14 +13,12 @@ namespace Yoktorm
     /// Yoktorm database context. This context manage all statement executions, connections, model states and is the public interface of the orm
     /// </summary>
     /// <typeparam name="TConnection">ADO.Net Connection class of the ado.net provider that should be used</typeparam>
-    public abstract class DbContext<TConnection> : IDbContext, IDisposable, IDynamicDbContext where TConnection : IDbConnection
+    public abstract class DbContext : IDbContext, IDisposable
     {
         #region Fields
         private ObjectState.IObjectStateManager objectStateManager;
         private IDbConnection connection;
-        private string connectionString;
         private IDatabase database;
-        private object _lock = new object();
         #endregion
 
         #region Constructor
@@ -30,10 +28,9 @@ namespace Yoktorm
         /// <param name="provider">Provider instance</param>
         /// <param name="connectionString">Connection string</param>
         /// <param name="useObjectStateManager">Defines whether to use the object state manager or not</param>
-        protected DbContext(IDatabase database, string connectionString, bool useObjectStateManager)
+        protected DbContext(IDatabase database, bool useObjectStateManager)
         {
             this.database = database;
-            this.connectionString = connectionString;
 
             if (useObjectStateManager)
             {
@@ -51,11 +48,7 @@ namespace Yoktorm
         private void EnsureConnection()
         {
             if (connection == null)
-            {
-                connection = database.Provider.Get(connectionString);
-                if (connection.State != ConnectionState.Open)
-                    connection.Open();
-            }
+                connection = database.GetConnection(true);
         }
         #endregion
 
@@ -78,7 +71,7 @@ namespace Yoktorm
             EnsureConnection();
 
             // Try to initialize the database
-            database.Initialize(this);
+            database.Initialize();
         }
 
         #region [Query]
@@ -112,14 +105,14 @@ namespace Yoktorm
         {
             EnsureConnection();
 
-            return connection.Query<T>(statement, parameter, transaction);
+            return QueryHelper.QueryPoco<T>(connection, statement, parameter, transaction);
         }
 
         public virtual IEnumerable<dynamic> Query(string statement, object parameter = null, IDbTransaction transaction = null)
         {
             EnsureConnection();
 
-            return connection.Query(statement, parameter, transaction);
+            return QueryHelper.Query(connection, statement, parameter, transaction);
         }
         #endregion
 
@@ -138,7 +131,7 @@ namespace Yoktorm
         {
             EnsureConnection();
 
-            return connection.Execute(statement, parameter, transaction);
+            return QueryHelper.Execute(connection, statement, parameter, transaction);
         }
         #endregion
 

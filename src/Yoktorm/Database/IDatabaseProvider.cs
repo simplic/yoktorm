@@ -9,7 +9,7 @@ namespace Yoktorm
         Type GetClrType(DbType dbType);
         Type GetClrType(int dbType);
         DbType GetDbType(Type clrType);
-        Db.DatabaseStructure GetStructure(IDynamicDbContext context);
-        IDbConnection Get(string connectionString);
+        Db.DatabaseStructure GetStructure(IDbConnection connection);
+        IDbConnection GetConnection(string connectionString);
     }
 }
