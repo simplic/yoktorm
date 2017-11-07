@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yoktorm.SQLite
+namespace Yoktorm.Model
 {
-    public class SQLiteDbContext
+    public interface IInstanceCreator
     {
-        
+        object CreateInstance(string tableName);
     }
 }

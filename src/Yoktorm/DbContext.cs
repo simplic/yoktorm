@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Yoktorm.ObjectState;
+using Dapper;
 
 namespace Yoktorm
 {
@@ -12,17 +13,12 @@ namespace Yoktorm
     /// Yoktorm database context. This context manage all statement executions, connections, model states and is the public interface of the orm
     /// </summary>
     /// <typeparam name="TConnection">ADO.Net Connection class of the ado.net provider that should be used</typeparam>
-    public abstract class DbContext<TConnection> : IDbContext where TConnection : IDbConnection, IDisposable
+    public abstract class DbContext : IDbContext, IDisposable
     {
         #region Fields
-        private IConnectionHandler<TConnection> connectionHandler;
-        private IProvider provider;
         private ObjectState.IObjectStateManager objectStateManager;
         private IDbConnection connection;
-        private string connectionString;
-
-        // Database which will be used for caching information
-        private string database;
+        private IDatabase database;
         #endregion
 
         #region Constructor
@@ -30,19 +26,18 @@ namespace Yoktorm
         /// Initialize new database context
         /// </summary>
         /// <param name="provider">Provider instance</param>
-        /// <param name="connectionHandler">Connection handler</param>
         /// <param name="connectionString">Connection string</param>
         /// <param name="useObjectStateManager">Defines whether to use the object state manager or not</param>
-        internal DbContext(IDatabase database, IProvider provider, IConnectionHandler<TConnection> connectionHandler, string connectionString, bool useObjectStateManager)
+        protected DbContext(IDatabase database, bool useObjectStateManager)
         {
-            this.provider = provider;
-            this.connectionHandler = connectionHandler;
-            this.connectionString = connectionString;
+            this.database = database;
 
             if (useObjectStateManager)
             {
                 this.objectStateManager = CreateObjectStateManager();
             }
+
+            InitializeDatabase();
         }
         #endregion
 
@@ -53,13 +48,7 @@ namespace Yoktorm
         private void EnsureConnection()
         {
             if (connection == null)
-            {
-                connection = connectionHandler.Get(connectionString);
-                if (connection.State != ConnectionState.Open)
-                    connection.Open();
-
-                database = connection.Database;
-            }
+                connection = database.GetConnection(true);
         }
         #endregion
 
@@ -75,6 +64,15 @@ namespace Yoktorm
                 connection.Dispose();
         }
         #endregion
+
+
+        private void InitializeDatabase()
+        {
+            EnsureConnection();
+
+            // Try to initialize the database
+            database.Initialize();
+        }
 
         #region [Query]
         public virtual IEnumerable<T> Query<T>() where T : new()
@@ -98,19 +96,27 @@ namespace Yoktorm
             return new List<T>();
         }
 
+        // public virtual IEnumerable<T> Query<T, TParent>(object parameter) where T : new()
+        // {
+        // Query child data by usign foreignkey information
+        // }
+
+        public IEnumerable<T> QueryPoco<T>(string statement, object parameter = null, IDbTransaction transaction = null)
+        {
+            EnsureConnection();
+
+            return QueryHelper.QueryPoco<T>(connection, statement, parameter, transaction);
+        }
+
         public virtual IEnumerable<dynamic> Query(string statement, object parameter = null, IDbTransaction transaction = null)
         {
             EnsureConnection();
-            return new List<dynamic>();
+
+            return QueryHelper.Query(connection, statement, parameter, transaction);
         }
         #endregion
 
         #region [Execute]
-        public virtual int Execute()
-        {
-            return Execute(null);
-        }
-
         public virtual int Execute(string statement)
         {
             return Execute(statement, null);
@@ -124,7 +130,8 @@ namespace Yoktorm
         public virtual int Execute(string statement, object parameter, IDbTransaction transaction)
         {
             EnsureConnection();
-            return 0;
+
+            return QueryHelper.Execute(connection, statement, parameter, transaction);
         }
         #endregion
 
