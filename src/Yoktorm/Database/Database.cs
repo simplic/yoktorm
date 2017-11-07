@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Yoktorm.Compiler;
@@ -15,8 +16,8 @@ namespace Yoktorm
     /// </summary>
     /// <typeparam name="TContext">Context type</typeparam>
     /// <typeparam name="TProvider">Provider type</typeparam>
-    public abstract class Database<TContext, TProvider> : IDatabase 
-        where TProvider : IDatabaseProvider 
+    public abstract class Database<TContext, TProvider> : IDatabase
+        where TProvider : IDatabaseProvider
         where TContext : IDbContext
     {
         #region Fields
@@ -28,6 +29,8 @@ namespace Yoktorm
         private volatile bool isInitialized;
         private string connectionString;
         private object _lock = new object();
+        private IInstanceCreator creator;
+        private Assembly assembly;
         #endregion
 
         #region Constructor
@@ -38,30 +41,44 @@ namespace Yoktorm
         /// <param name="connectionString">Connection string</param>
         public Database(string connectionString, TProvider provider)
         {
-            modelManager = new Model.ModelManager();
-            modelCompiler = new Compiler.ModelCompiler();
+            modelManager = GetModelManager();
+            modelCompiler = GetModelCompiler();
             this.provider = provider;
             this.connectionString = connectionString;
-            SetupCache();
-        }
-
-        /// <summary>
-        /// Initialize new database
-        /// </summary>
-        /// <param name="provider">Provider instance</param>
-        /// <param name="modelManager">Model manager</param>
-        /// <param name="modelCompiler">Model compiler</param>
-        /// <param name="connectionString">Connection string</param>
-        public Database(string connectionString, TProvider provider, Model.IModelManager modelManager, Compiler.IModelCompiler modelCompiler)
-        {
-            this.modelManager = modelManager;
-            this.modelCompiler = modelCompiler;
-            this.provider = provider;
-            this.connectionString = connectionString;
-
             SetupCache();
         }
         #endregion
+
+        protected virtual IModelManager GetModelManager()
+        {
+            return new ModelManager();
+        }
+
+        protected virtual IModelCompiler GetModelCompiler()
+        {
+            var configuration = new CompilerConfiguration()
+            {
+                AssemblyName = $"{GetType().Name}",
+                Namespace = $"{GetType().Namespace.Replace(".", "_")}"
+            };
+
+            return new ModelCompiler(configuration);
+        }
+
+        public IInstanceCreator GetInstanceCreator()
+        {
+            if (creator == null)
+            {
+                // Instantiate creator
+                var type = typeof(IInstanceCreator);
+                var creatorType = assembly.GetTypes()
+                    .Where(p => type.IsAssignableFrom(p)).FirstOrDefault();
+
+                return (IInstanceCreator)Activator.CreateInstance(creatorType);
+            }
+
+            return creator;
+        }
 
         public void Initialize(bool force = false)
         {
@@ -71,6 +88,12 @@ namespace Yoktorm
                 {
                     isInitialized = true;
                     structure = provider.GetStructure(GetConnection(true));
+
+                    // Compile and load assembly
+                    var asmBytes = modelCompiler.Compile(structure);
+                    assembly = Assembly.Load(asmBytes);
+
+                    creator = GetInstanceCreator();
                 }
             }
         }
@@ -144,7 +167,7 @@ namespace Yoktorm
         /// </summary>
         /// <returns>Returns a new instance <see cref="IDbContext"/> instance</returns>
         public abstract TContext Create();
-        
+
         /// <summary>
         /// Gets the current model manager
         /// </summary>

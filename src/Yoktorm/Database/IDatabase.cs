@@ -23,5 +23,7 @@ namespace Yoktorm
         /// <param name="ensureIsOpen">If set to true, the connection will be opened</param>
         /// <returns>Instance of a connection</returns>
         IDbConnection GetConnection(bool ensureIsOpen = false);
+
+        Model.IInstanceCreator GetInstanceCreator();
     }
 }

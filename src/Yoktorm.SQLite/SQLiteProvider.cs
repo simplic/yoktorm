@@ -50,6 +50,14 @@ namespace Yoktorm.SQLite
             return DbType.AnsiString;
         }
 
+        public string GetAsParameterName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return name;
+
+            return $"@{name}";
+        }
+
         public DatabaseStructure GetStructure(IDbConnection connection)
         {
             var structure = new DatabaseStructure();

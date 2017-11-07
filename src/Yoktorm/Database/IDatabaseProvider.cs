@@ -11,5 +11,6 @@ namespace Yoktorm
         DbType GetDbType(Type clrType);
         Db.DatabaseStructure GetStructure(IDbConnection connection);
         IDbConnection GetConnection(string connectionString);
+        string GetAsParameterName(string name);
     }
 }

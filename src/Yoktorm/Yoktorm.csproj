@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\TableAttribute.cs" />
+    <Compile Include="Compiler\CompilerConfiguration.cs" />
+    <Compile Include="Compiler\CompilerHelper.cs" />
     <Compile Include="Compiler\IModelCompiler.cs" />
     <Compile Include="Compiler\ModelCompiler.cs" />
     <Compile Include="Database\IDatabaseProvider.cs" />
@@ -71,8 +73,12 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Database\IDatabase.cs" />
     <Compile Include="IDbContext.cs" />
+    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\IModelCreator.cs" />
     <Compile Include="Model\IModelManager.cs" />
+    <Compile Include="Model\ITable.cs" />
     <Compile Include="Model\ModelManager.cs" />
+    <Compile Include="Model\TableBase.cs" />
     <Compile Include="ObjectState\IObjectStateManager.cs" />
     <Compile Include="ObjectState\ObjectStateManager.cs" />
     <Compile Include="ObjectState\State.cs" />

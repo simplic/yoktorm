@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Yoktorm.Statement
 {
-    class StatementCache
+    internal class StatementCache
     {
+        private IDictionary<string, string> selectStatemetns;
+        private IDictionary<string, string> insertStatements;
+        private IDictionary<string, string> updateStatements;
+        private IDictionary<string, string> deleteStatements;
     }
 }
